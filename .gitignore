@@ -17,3 +17,4 @@ fp-info-cache
 *.kicad_prl
 *.lck
 .streamlit/
+firmware/node/test_host/test_core
