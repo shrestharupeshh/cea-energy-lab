@@ -50,6 +50,8 @@ class CropParams:
     t_max: float = 40.0            # C, photosynthesis reaches zero
     ec_half: float = 0.25          # mS cm-1, EC at which nutrient factor = 0.5 (Michaelis-Menten form)
     ec_ref: float = 1.4            # mS cm-1, EC at which the factor is normalised to 1
+    sla_obs: float = 0.035         # m2 leaf per g shoot dry weight used for REPORTED leaf area / LAI. Van Henten's c_lar
+                                   # is an effective interception parameter and over-states real leaf area roughly two-fold.
     dm_content: float = 0.048      # g dry / g fresh shoot (declines with light; treated as constant here)
     r_b: float = 200.0             # s m-1 leaf boundary-layer resistance
     r_s_light: float = 200.0       # s m-1 stomatal resistance in light
@@ -102,8 +104,9 @@ def derivatives(x_nsdw, x_sdw, par_w, co2, t, p: CropParams, ec=None):
     return d_n, d_s
 
 
-def lai(x_sdw, p: CropParams):
-    return p.c_lar * (1.0 - p.c_tau) * x_sdw
+def lai(x_sdw, p: CropParams, x_nsdw=0.0):
+    """Observable leaf area index (m2 m-2) from shoot dry weight and measured-type SLA."""
+    return p.sla_obs * (1.0 - p.c_tau) * (x_sdw + x_nsdw)
 
 
 def transpiration(x_sdw, par_w, t, rh, p: CropParams):
@@ -141,8 +144,8 @@ def outputs(x_nsdw, x_sdw, p: CropParams) -> dict:
     return {
         "shoot_dw_g": shoot_dw_m2 / p.plant_density,
         "shoot_fw_g": shoot_dw_m2 / p.plant_density / p.dm_content,
-        "leaf_area_cm2": lai(x_sdw, p) / p.plant_density * 1e4,
-        "lai": lai(x_sdw, p),
+        "leaf_area_cm2": lai(x_sdw, p, x_nsdw) / p.plant_density * 1e4,
+        "lai": lai(x_sdw, p, x_nsdw),
     }
 
 
@@ -200,6 +203,7 @@ def simulate_schedule(days: int, ppfd: float | np.ndarray, photoperiod_h: float 
     ppfd_h = (light * ppfd_d[:, None]).ravel()
     t_h = np.where(light > 0, td[:, None], tn[:, None]).ravel()
     ec_h = None if ec is None else np.repeat(np.broadcast_to(np.asarray(ec, float), (days,)), 24)
-    res = simulate(ppfd_h, co2, t_h, 1.0, p, init_shoot_dw, ec=ec_h, rh=rh, substeps=4)
+    rh_h = np.repeat(np.broadcast_to(np.asarray(rh, float), (days,)), 24)
+    res = simulate(ppfd_h, co2, t_h, 1.0, p, init_shoot_dw, ec=ec_h, rh=rh_h, substeps=4)
     res["day_end_index"] = np.arange(1, days + 1) * 24 - 1
     return res
