@@ -1,0 +1,57 @@
+qty,references,value,footprint,mpn,description
+1,C1,100u/50V,CP_Radial_D8.0mm_P3.50mm,,"Bulk, logic feed"
+1,C2,470u/35V,CP_Radial_D10.0mm_P5.00mm,,"Bulk, actuator feed"
+2,C3 C4,22u/25V,CP_Radial_D8.0mm_P3.50mm,,
+1,C5,100u/25V,CP_Radial_D8.0mm_P3.50mm,,
+3,C6 C7 C9,100n,C_Disc_D5.0mm_W2.5mm_P5.00mm,,
+1,C8,100u/35V,CP_Radial_D8.0mm_P3.50mm,,Stepper VMOT bulk
+3,D1 D4 D5,1N5819,D_DO-41_SOD81_P10.16mm_Horizontal,1N5819,"Reverse-polarity Schottky, logic feed"
+2,D2 D3,P6KE27A,D_DO-15_P12.70mm_Horizontal,P6KE27A,"TVS, logic feed"
+1,F1,1A T,Fuseholder_Cylinder-5x20mm_Schurter_0031_8201_Horizontal_Open,0031.8201,5x20 fuse holder + 1 A slow fuse (logic feed)
+1,J1,PWR_IN,"TerminalBlock_Phoenix_MKDS-1,5-4-5.08_1x04_P5.08mm_Horizontal",1715747,Power input: GND / 24V logic / 24V actuators / GND
+1,J10,FAN1,FanPinHeader_1x04_P2.54mm_Vertical,47053-1000,4-pin PWM fan 1
+1,J11,FAN2,FanPinHeader_1x04_P2.54mm_Vertical,47053-1000,4-pin PWM fan 2
+1,J12,FAN3,FanPinHeader_1x04_P2.54mm_Vertical,47053-1000,4-pin PWM fan 3
+1,J2,HEATER,"TerminalBlock_Phoenix_MKDS-1,5-2-5.08_1x02_P5.08mm_Horizontal",1715721,PTC heater (via external 45 C thermostat)
+1,J20,ESP32-S3 L,PinSocket_1x22_P2.54mm_Vertical,ESP32-S3-DevKitC-1-N8R2,DevKitC-1 left header socket
+1,J21,ESP32-S3 R (22.86),PinSocket_1x22_P2.54mm_Vertical,,"DevKitC-1 right header socket, 22.86 mm row spacing"
+1,J22,ESP32-S3 R (25.40),PinSocket_1x22_P2.54mm_Vertical,,"Alternative right socket position, 25.4 mm row spacing (fit one)"
+1,J3,PUMP,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,B2B-XH-A,Circulation pump
+1,J30,TMC2209 A,PinSocket_1x08_P2.54mm_Vertical,TMC2209 SilentStepStick,"Stepper driver socket, logic side (MS1 = MS2 = high: 1/16)"
+1,J31,TMC2209 B,PinSocket_1x08_P2.54mm_Vertical,,"Stepper driver socket, motor side"
+1,J32,MOTOR,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,NEMA17 gantry motor
+1,J33,ENDSTOP,JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical,B3B-XH-A,Gantry home switch
+1,J4,PERI,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,B2B-XH-A,Peristaltic top-up pump
+1,J40,SHT45,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,I2C: SHT45
+1,J41,SCD30,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,I2C: SCD30
+1,J42,AS7341,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,I2C: AS7341
+1,J43,NAU7802,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,I2C: NAU7802
+1,J44,EZO_PH,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,I2C: EZO_PH
+1,J45,EZO_EC,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,I2C: EZO_EC
+1,J46,INA228_A,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,I2C: INA228_A
+1,J47,INA228_B,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,I2C: INA228_B
+1,J5,HUMID,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,B2B-XH-A,Ultrasonic humidifier module
+1,J50,DS18B20_A,JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical,B3B-XH-A,1-Wire: solution temperature
+1,J51,DS18B20_B,JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical,B3B-XH-A,1-Wire: heater outlet / spare
+1,J52,FLOW,JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical,B3B-XH-A,Hall flow meter
+1,J53,CAMERA,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,B4B-XH-A,"Camera node (Pi Zero 2 W): power, trigger, busy"
+1,J6,IMG_LED,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,B2B-XH-A,Imaging LED ring
+1,J60,FLOAT_LO,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,B2B-XH-A,Switch input: FLOAT_LO
+1,J61,FLOAT_HI,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,B2B-XH-A,Switch input: FLOAT_HI
+1,J62,LEAK,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,B2B-XH-A,Switch input: LEAK
+1,J63,DOOR,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,B2B-XH-A,Switch input: DOOR
+1,J64,EXP,PinHeader_1x06_P2.54mm_Vertical,,Spare expander I/O
+1,J7,LED_DIM,JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical,B3B-XH-A,PWM to LED constant-current drivers
+5,Q1 Q2 Q3 Q4 Q5,IRLB8721,TO-220-3_Vertical,IRLB8721PBF,Low-side switch: HEAT
+3,Q10 Q11 Q12,2N7000,TO-92_Inline_Wide,2N7000,Open-drain fan PWM (inverting)
+1,R1,100k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,,E-stop sense divider (24 V present)
+5,R10 R12 R14 R16 R18,100R,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,,Gate resistor
+1,R2,12k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,,
+2,R3 R4,2k2,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,,I2C pull-up
+1,R34,20k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,,
+1,R5,4k7,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,,1-Wire pull-up
+15,R6 R11 R13 R15 R17 R19 R7 R30 R31 R32 R33 R40 R41 R42 R43,10k,R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,,Output-enable pull-up (outputs off by default)
+2,U1 U2,TSR 1-2450,Converter_DCDC_TRACO_TSR-1_THT,TSR 1-2450,5 V 1 A switching regulator (logic)
+1,U3,TSR 2-24120,Converter_DCDC_TRACO_TSR-1_THT,TSR 2-24120,"12 V 2 A switching regulator (fans, pumps, imaging LED)"
+1,U4,74HCT541,DIP-20_W7.62mm,SN74HCT541N,3.3 V -> 5 V gate buffer; outputs hi-Z until OUT_EN_N is driven low
+1,U5,MCP23017,DIP-28_W7.62mm,MCP23017-E/SP,I2C I/O expander (0x20): slow digital inputs

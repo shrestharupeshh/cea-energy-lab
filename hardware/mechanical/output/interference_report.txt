@@ -1,0 +1,9 @@
+hq_camera vs PP-M-021_window: intersection volume 0.0 mm3 -> clear
+PP-M-102_camera_mount vs PP-M-021_window: intersection volume 0.0 mm3 -> clear
+tub vs ext2020_tub_support: intersection volume 0.0 mm3 -> clear
+hq_camera vs lettuce_envelope: intersection volume 0.0 mm3 -> clear
+mgn12h vs ext2020_gantry_beam: intersection volume 0.0 mm3 -> clear
+led_strip vs PP-M-021_window: intersection volume 0.0 mm3 -> clear
+topup_reservoir vs node_enclosure: intersection volume 0.0 mm3 -> clear
+ptc_heater vs tub: intersection volume 0.0 mm3 -> clear
+PP-M-107_sensor_shield vs tub: intersection volume 0.0 mm3 -> clear

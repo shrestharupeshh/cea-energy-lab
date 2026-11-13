@@ -1,0 +1,46 @@
+part_no,description,material,qty,length_mm,category
+PP-M-001,"2020 T-slot extrusion, 6063-T5, clear anodised",Al 6063-T5,8,180.0,extrusion
+PP-M-001,"2020 T-slot extrusion, 6063-T5, clear anodised",Al 6063-T5,1,220.0,extrusion
+PP-M-001,"2020 T-slot extrusion, 6063-T5, clear anodised",Al 6063-T5,11,500.0,extrusion
+PP-M-001,"2020 T-slot extrusion, 6063-T5, clear anodised",Al 6063-T5,7,800.0,extrusion
+PP-M-001,"2020 T-slot extrusion, 6063-T5, clear anodised",Al 6063-T5,6,880.0,extrusion
+PP-M-010,Floor panel 800 x 500 x 5,"Expanded PVC 5 mm, white",1,,sheet
+PP-M-011,"Back panel, chamber 850 x 810 x 5","Expanded PVC 5 mm, white",1,,sheet
+PP-M-012,Left side panel 850 x 510 x 5,"Expanded PVC 5 mm, white",1,,sheet
+PP-M-013,Partition panel 850 x 510 x 5,"Expanded PVC 5 mm, white",1,,sheet
+PP-M-014,Right side panel 850 x 510 x 5,"Expanded PVC 5 mm, white",1,,sheet
+PP-M-015,"Back panel, service bay 850 x 190 x 5","Expanded PVC 5 mm, white",1,,sheet
+PP-M-016,Top cover 1040 x 540 x 5,"Expanded PVC 5 mm, white",1,,sheet
+PP-M-017,"Chamber door (hinged, gasketed) 836 x 736 x 5","Expanded PVC 5 mm, white",1,,sheet
+PP-M-018,LED bay front cover 836 x 116 x 5,"Expanded PVC 5 mm, white",1,,sheet
+PP-M-019,Service bay door 876 x 196 x 5,"Expanded PVC 5 mm, white",1,,sheet
+PP-M-020,Service bay floor 500 x 180 x 5,"Expanded PVC 5 mm, white",1,,sheet
+PP-M-021,"LED window, cast acrylic 3 mm, 838 x 538, corner notched","PMMA cast, clear",1,,sheet
+PP-M-022,"Tub lid 600 x 400 x 6, 6 x 51 mm holes + ports","Expanded PVC 6 mm, matte black",1,,sheet
+PP-M-023,LED heat-spreader plate 780 x 480 x 3,Al 5052-H32,1,,sheet
+PP-M-101,carriage plate,"PETG, printed",1,,printed
+PP-M-102,camera mount,"PETG, printed",1,,printed
+PP-M-103,motor mount,"PETG, printed",1,,printed
+PP-M-104,idler mount,"PETG, printed",1,,printed
+PP-M-105,endstop mount,"PETG, printed",1,,printed
+PP-M-106,light trap,"PETG matte black, printed",3,,printed
+PP-M-107,sensor shield,"PETG, printed",1,,printed
+PP-M-108,probe adapter,"PETG, printed",2,,printed
+PP-M-109,loadcell cradle,"PETG, printed",1,,printed
+PP-M-110,float bracket,"PETG, printed",1,,printed
+PP-P-201,"Euro container 600 x 400 x 170, opaque PP",PP,1,,purchased
+PP-P-202,Net pot 2 inch,PP,6,,purchased
+PP-P-301,LED strip BXEB-L0560Z-40E2000-C-C3,-,6,,purchased
+PP-P-401,"Linear rail MGN12, 700 mm, with MGN12H carriage",steel,1,,purchased
+PP-P-402,Raspberry Pi HQ camera + 6 mm CS lens,-,1,,purchased
+PP-P-403,Raspberry Pi Zero 2 W,-,1,,purchased
+PP-P-404,"NEMA17 stepper 42 x 40 mm, 1.8 deg",-,1,,purchased
+PP-P-405,"GT2 belt 6 mm, open, 1.7 m + 20T pulley + idler",-,1,,purchased
+PP-P-501,Fan 80 x 25 mm PWM NF-A8 PWM,-,3,,purchased
+PP-P-502,PTC fan heater 24 V 100 W with 45 C cut-out,-,1,,purchased
+PP-P-601,IP65 ABS enclosure 200 x 120 x 75 (node electronics),ABS,1,,purchased
+PP-P-602,Top-up reservoir 5 L HDPE,HDPE,1,,purchased
+PP-P-603,Bar load cell 5 kg (TAL220B class),-,1,,purchased
+PP-P-604,Circulation pump 12 V brushless,-,1,,purchased
+PP-P-605,"Flow meter, hall, 0.3-6 L/min",-,1,,purchased
+PP-P-606,Peristaltic pump 12 V,-,1,,purchased

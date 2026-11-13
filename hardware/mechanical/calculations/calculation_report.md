@@ -39,16 +39,16 @@ each result has a corresponding commissioning test in `docs/validation/validatio
 | Photon flux of all strips at 700 mA | 223 umol/s | lm x PPF/klm conversion, thermally derated |
 | LED + driver electrical power at 100 % | 84.4 W |  |
 | System photon efficacy | 2.64 umol/J | incl. driver |
-| Mean PPFD over 600x400 grow area at 100 % | 344 umol/m2/s | lid plane, simulated |
-| PPFD at the six plant positions at 100 % | 340, 353, 341, 341, 353, 341 | umol/m2/s |
+| Mean PPFD over 600x400 grow area at 100 % | 338 umol/m2/s | lid plane, simulated |
+| PPFD at the six plant positions at 100 % | 335, 346, 335, 335, 346, 336 | umol/m2/s |
 | Uniformity min/mean (plant positions) | 0.99 | requirement >= 0.80 |
-| Uniformity min/max (plant positions) | 0.96 |  |
-| Fraction of emitted photons landing on grow area | 0.37 |  |
-| PWM duty for 250 umol/m2/s | 72 % |  |
-| Electrical power at nominal PPFD | 61.2 W |  |
+| Uniformity min/max (plant positions) | 0.97 |  |
+| Fraction of emitted photons landing on grow area | 0.36 |  |
+| PWM duty for 250 umol/m2/s | 74 % |  |
+| Electrical power at nominal PPFD | 62.3 W |  |
 | DLI at nominal (16 h) | 14.4 mol/m2/d |  |
-| Maximum DLI at 100 % (16 h) | 19.9 mol/m2/d |  |
-| Lighting energy at nominal | 0.98 kWh/day | 27.4 kWh per 28-day cycle per pod |
+| Maximum DLI at 100 % (16 h) | 19.5 mol/m2/d |  |
+| Lighting energy at nominal | 1.00 kWh/day | 27.9 kWh per 28-day cycle per pod |
 
 ![Simulated PPFD map](ppfd_map_simulated.png)
 
@@ -94,12 +94,12 @@ each result has a corresponding commissioning test in `docs/validation/validatio
 
 | Quantity | Value | Note |
 |---|---|---|
-| Rail 48V_LED per pod | peak 84.4 W / mean 40.8 W |  |
+| Rail 48V_LED per pod | peak 84.4 W / mean 41.5 W |  |
 | Rail 24V_ACT per pod | peak 126.4 W / mean 33.0 W |  |
 | Rail 24V_LOGIC per pod | peak 3.7 W / mean 3.7 W |  |
 | Pod total (DC side) | peak 215 W / mean 78 W | control recipe, 20 C room |
-| Facility at the wall (4 pods + central + air pump) | peak 967 W / mean 358 W | PSU efficiency 0.90 |
-| Facility energy per 28-day cycle | 241 kWh | estimate; metered in operation |
+| Facility at the wall (4 pods + central + air pump) | peak 967 W / mean 362 W | PSU efficiency 0.90 |
+| Facility energy per 28-day cycle | 243 kWh | estimate; metered in operation |
 | 24 V supply loading | 87 % | all heaters on simultaneously |
 | 48 V supply loading | 56 % |  |
 | Mains current at peak (120 V) | 8.1 A | 15 A GFCI circuit adequate |
@@ -115,7 +115,7 @@ each result has a corresponding commissioning test in `docs/validation/validatio
 
 | Load | Rail | Peak W | Typ. duty | Mean W | Note |
 |---|---|---|---|---|---|
-| LED strips via 3 x CC driver | 48V_LED | 84.4 | 0.483 | 40.81 | dimmed to nominal PPFD |
+| LED strips via 3 x CC driver | 48V_LED | 84.4 | 0.492 | 41.53 | dimmed to nominal PPFD |
 | PTC heater | 24V_ACT | 100.0 | 0.250 | 25.00 | duty depends on setpoint and room |
 | Exhaust + mixing + LED-bay fans | 24V_ACT | 2.9 | 0.800 | 2.30 |  |
 | Circulation pump | 24V_ACT | 5.0 | 1.000 | 5.00 |  |

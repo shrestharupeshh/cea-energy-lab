@@ -63,7 +63,7 @@ lighting:
   driver_efficiency: 0.95
   strips_per_driver: 2      # series
   bus_voltage_v: 48.0
-  led_plane_above_lid: 634.0
+  led_plane_above_lid: 654.0   # CAD: strips on underside of heat-spreader plate under the top ring
   nominal_ppfd: 250.0       # umol m-2 s-1 at lid plane (control treatment)
   nominal_photoperiod_h: 16.0
 

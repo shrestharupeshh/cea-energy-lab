@@ -1,0 +1,71 @@
+parts: 88  nets: 65  pads: 348
+routed track length: 5878 mm, vias: 92
+connections the router could not complete: 0
+connections routed below nominal width (neck-down): 1
+  HEATER_SW at J2.2: 1.2 mm
+
+routed HEATER_SW        pins= 2 width=2.5
+routed +24V_ACT         pins= 8 width=2.5
+routed HEAT_G5          pins= 2 width=0.3
+routed FAN1_OD          pins= 2 width=0.3
+routed M_A2             pins= 2 width=0.8
+routed FAN3_OD          pins= 2 width=0.3
+routed FAN2_OD          pins= 2 width=0.3
+routed M_A1             pins= 2 width=0.8
+routed IMG_SW           pins= 2 width=0.8
+routed HUM_SW           pins= 2 width=0.8
+routed M_B1             pins= 2 width=0.8
+routed FLOW_5V          pins= 2 width=0.3
+routed PUMP_G5          pins= 2 width=0.3
+routed M_B2             pins= 2 width=0.8
+routed HEAT_G           pins= 3 width=0.3
+routed PUMP_G           pins= 3 width=0.3
+routed PERI_G           pins= 3 width=0.3
+routed HUM_G            pins= 3 width=0.3
+routed IMG_G            pins= 3 width=0.3
+routed +24V_LOGIC_F     pins= 2 width=0.8
+routed +24V_LOGIC_IN    pins= 2 width=0.8
+routed PUMP_SW          pins= 3 width=0.8
+routed PERI_SW          pins= 3 width=0.8
+routed PERI_G5          pins= 2 width=0.3
+routed ESTOP_OK         pins= 3 width=0.3
+routed LED_PWM          pins= 2 width=0.3
+routed IMG_LED          pins= 2 width=0.3
+routed HUM_G5           pins= 2 width=0.3
+routed FAN1_PWM         pins= 2 width=0.3
+routed HUMID            pins= 3 width=0.3
+routed +24V_L           pins= 5 width=0.8
+routed LED_PWM_5V       pins= 3 width=0.3
+routed IMG_G5           pins= 2 width=0.3
+routed CAM_BUSY         pins= 2 width=0.3
+routed PUMP             pins= 2 width=0.3
+routed HEATER           pins= 2 width=0.3
+routed PERI             pins= 2 width=0.3
+routed FAN2_PWM         pins= 2 width=0.3
+routed CAM_TRIG         pins= 2 width=0.3
+routed FLOAT_LO         pins= 3 width=0.3
+routed OUT_EN_N         pins= 5 width=0.3
+routed +5V_CAM          pins= 3 width=0.8
+routed FAN3_PWM         pins= 2 width=0.3
+routed TACH1            pins= 3 width=0.3
+routed TACH2            pins= 3 width=0.3
+routed FLOAT_HI         pins= 3 width=0.3
+routed ENDSTOP          pins= 4 width=0.3
+routed STEP_EN_N        pins= 3 width=0.3
+routed LEAK             pins= 3 width=0.3
+routed STEP             pins= 3 width=0.3
+routed DIR              pins= 3 width=0.3
+routed DOOR             pins= 3 width=0.3
+routed FLOW             pins= 4 width=0.3
+routed GPB0             pins= 2 width=0.3
+routed GPB1             pins= 2 width=0.3
+routed GPB2             pins= 2 width=0.3
+routed GPB3             pins= 2 width=0.3
+routed OW               pins= 4 width=0.3
+routed EXP_INT          pins= 3 width=0.3
+routed SCL              pins=11 width=0.3
+routed SDA              pins=11 width=0.3
+routed +5V              pins= 8 width=0.8
+routed +12V             pins=10 width=1.0
+routed +3V3             pins=31 width=0.6
+routed GND              pins=72 width=0.6

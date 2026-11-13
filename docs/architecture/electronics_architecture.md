@@ -1,0 +1,137 @@
+# Electronics and embedded architecture
+
+## 1. Topology
+
+```
+ 120 VAC (GFCI outlet) ── smart plug w/ energy meter (wall energy) ── power enclosure (IP54, rack side)
+   IEC inlet + 10 A fuse + switch
+   ├─ PSU-24: Mean Well LRS-600-24 ──┬─ 24V_LOGIC bus (always on) ── 1 A blade fuse per pod
+   │                                 └─ K1 (E-stop relay, NO) ── 24V_ACT bus ── 7.5 A blade fuse per pod
+   └─ PSU-48: Mean Well LRS-600-48 ──── K2 (E-stop relay, NO) ── 48V_LED bus ── 2 A blade fuse per pod
+   E-stop: latching mushroom switch, NC contact in series with K1/K2 coils (fail-safe: open = off)
+   PE: mains earth to both PSU cases, enclosure, and the rack frame (one bonding stud). DC negative
+   of both supplies joined at one star point in the enclosure and bonded to PE there only.
+
+ per pod:
+   48V_LED ── INA228 breakout A ── 3 x LDD-700HW (wired CC driver) ── 3 x 2 LED strips in series
+   24V_ACT ── INA228 breakout B ── node PCB J1.3 ── heater switch, 12 V regulator, stepper driver
+   24V_LOGIC ───────────────────── node PCB J1.2 ── fuse, Schottky, TVS ── 5 V (MCU), 5 V (camera)
+   node PCB (PP-E-001) ── ESP32-S3-DevKitC-1 ── USB ── powered hub ── Raspberry Pi 5 (central)
+   Pi Zero 2 W + HQ camera on the gantry carriage: 5 V + trigger/busy from node PCB; data by Wi-Fi
+```
+
+## 2. Role split
+
+| Layer | Device | Responsibilities | Must not |
+|-------|--------|------------------|----------|
+| Supervisory | Raspberry Pi 5 | experiment metadata, schedules ("recipes"), data store, CV, models, dashboard, time base (chrony/NTP) | switch any actuator directly |
+| Deterministic | ESP32-S3 node (one per pod) | 1 Hz sensor acquisition, PI/hysteresis loops, photoperiod, gantry motion, limits, interlocks, comms watchdog | depend on the host to stay safe |
+| Imaging | Pi Zero 2 W (one per pod) | picamera2 capture with locked exposure/gain/AWB/focus, DNG + JPEG, store-and-forward with SHA-256 | decide when to image (node triggers after turning grow LEDs off) |
+
+## 3. Sensors and actuators (per pod)
+
+| Function | Part | Interface | Stated accuracy (datasheet; verify) | Note |
+|----------|------|-----------|-------------------------------------|------|
+| Air T / RH | Sensirion SHT45 (Adafruit 5665) | I2C 0x44 | ± 0.1 °C, ± 1.0 %RH typ. | aspirated, shielded |
+| CO₂ | Sensirion SCD30 (Adafruit 4867) | I2C 0x61 | ± (30 ppm + 3 %) | NDIR; own T/RH not used for control |
+| Light monitor | ams AS7341 (Adafruit 4698) | I2C 0x39 | relative; cross-calibrated to Apogee quantum sensor | under diffuser at lid level |
+| Solution T | DS18B20 waterproof | 1-Wire | ± 0.5 °C (calibrated to ± 0.2 °C) | second probe at heater outlet |
+| pH | Atlas Scientific EZO-pH + lab probe, isolated carrier | I2C 0x63 | ± 0.002 resolution; accuracy set by calibration | galvanic isolation mandatory |
+| EC | Atlas Scientific EZO-EC + K1.0 probe, isolated carrier | I2C 0x64 | ± 2 % | isolated |
+| Reservoir mass | 5 kg bar load cell + NAU7802 (Adafruit 4538) | I2C 0x2A | ~1 g resolution; drift measured in VAL-WQ-04 | water use |
+| Flow | Hall turbine meter | pulse | ± 10 % | pump-alive check, not metrology |
+| Levels / leak / door | float switches, leak rope/pad, reed switch | MCP23017 | - | interlocks |
+| Power | 2 x INA228 breakout (85 V, 20-bit) | I2C 0x40/0x41 | ± 0.1 % gain typ. + shunt tolerance | LED rail and actuator rail energy |
+| Grow light | 6 x Bridgelux EB Gen 3 560 mm, 3 x LDD-700HW | PWM 1 kHz (5 V) | - | outputs default off |
+| Heater | 24 V 100 W PTC + fan, 45 °C bimetal cut-out in series | MOSFET, slow PWM | - | hardware-limited |
+| Fans | 3 x Noctua NF-A8 PWM | 25 kHz PWM, tach on two | - | exhaust, mixing, LED bay |
+| Pumps | 12 V circulation, 12 V peristaltic top-up | MOSFET | - | flyback diodes |
+| Humidifier | 5 V ultrasonic disc module | MOSFET | - | DI water only |
+| Gantry | NEMA17 + TMC2209, microswitch home | STEP/DIR | - | driver disabled between moves |
+
+Facility-level references (shared): Apogee MQ-500 quantum meter (PAR transfer standard), reference
+thermometer (± 0.1 °C), handheld pH/EC meter, check weights, hot-wire anemometer.
+
+## 4. Is a custom PCB justified?
+
+Yes, for the node carrier only. Each pod needs about 30 connectors, five power switches, three fan
+channels, a stepper socket, pull-ups and protection; hand-wiring four or more copies on perfboard
+is slow, error-prone and not reproducible. The carrier is deliberately conservative:
+
+- **All through-hole**, modules in sockets (ESP32-S3-DevKitC-1, TMC2209 stick, TRACO SIP
+  regulators). Anyone can assemble and repair it; no fine-pitch soldering.
+- Fine-pitch or precision parts stay on purchased breakouts (INA228, NAU7802, SHT45, SCD30, EZO).
+- No mains and no 48 V on the board. Maximum 24 V DC (SELV).
+
+Not justified in v1: custom LED driver board, custom camera board, custom power distribution board
+(DIN-rail parts and blade fuse block are cheaper and safer).
+
+## 5. Node PCB PP-E-001 (KiCad 7)
+
+Source of truth: `hardware/electrical/pcb/node_netlist.py`. Generated by
+`generate_schematic.py`, `generate_pcb.py`, `export_fab.py` into `plantpulse_node/`:
+
+- `plantpulse_node.kicad_sch` + PDF: schematic, connectivity by global labels, grouped by function.
+- `plantpulse_node.kicad_pcb`: 175 x 120 mm, 2 layers, 88 parts, 65 nets, routed by the built-in
+  grid router, GND routed and poured on both layers.
+- `fab/gerber/*`: Gerber X2 + Excellon drill + drill maps; `fab/*-pos.csv`; assembly PDF; STEP.
+- `plantpulse_node_bom.csv`, `netlist_consistency.txt`, `routing_report.txt`, `drc_report.txt`.
+
+**Verification status (this is a design that has not been fabricated):**
+
+| Check | Result |
+|-------|--------|
+| Schematic netlist = design netlist = PCB netlist (pin by pin) | consistent (`netlist_consistency.txt`) |
+| KiCad DRC: unconnected pads | 0 |
+| KiCad DRC: copper clearance / short violations | 0 |
+| KiCad DRC: courtyard overlap | 1, intentional (J21/J22 are alternative positions for the right-hand MCU socket; fit one) |
+| KiCad DRC: silkscreen overlaps | 7, cosmetic |
+| KiCad DRC: `lib_footprint_issues` | 92, informational (board generated without a project library table) |
+| ERC | not run (KiCad 7 CLI has no ERC); open the schematic in KiCad and run ERC before ordering |
+| Prototype build and bring-up | **not done** - requires physical work |
+
+Known review items before ordering boards:
+
+1. Confirm the ESP32-S3-DevKitC-1 header row spacing against the purchased board revision (both
+   22.86 mm and 25.40 mm socket positions are provided) and the pin order in `node_netlist.py`.
+2. `HEATER_SW` necks from 2.5 mm to 1.2 mm for a few millimetres at J2. Order 2 oz copper, or
+   re-place J2. Heater current is 4.2 A.
+3. U3 uses the TSR-1 SIP-3 footprint for a TSR 2-24120; confirm the pin pitch/outline in its datasheet.
+4. The router does not optimise return paths or length; this is a low-speed board (I2C 100 kHz,
+   25 kHz PWM, step pulses), so that is acceptable, but a human layout review is still required.
+5. GND pour uses solid pad connections: use a ≥ 60 W iron for ground pins.
+
+GPIO map: run `python hardware/electrical/pcb/node_netlist.py`.
+
+## 6. Protection, isolation, grounding, moisture
+
+- **Fusing**: mains 10 A; per-pod blade fuses on each feed; 1 A 5 x 20 fuse on the board logic feed.
+- **Transients / polarity**: P6KE27A TVS on both 24 V feeds; series Schottky on the logic feed;
+  keyed connectors; flyback diodes on pump outputs.
+- **Fail-safe outputs**: all power outputs pass through a 74HCT541 whose enable is pulled inactive;
+  outputs are high-impedance (gates pulled down, LED dim line pulled low) until firmware has
+  passed self-test and asserts `OUT_EN_N`. MCU reset, brown-out or an unprogrammed MCU leaves
+  everything off.
+- **Heater**: bimetal cut-out in series (independent of electronics), firmware limit, E-stop.
+- **Isolation**: pH and EC circuits on Atlas isolated carriers, because probes in a conductive
+  solution otherwise couple through the common ground and through each other.
+- **Grounding**: single star point; frame bonded to PE; the nutrient solution is not intentionally
+  grounded (isolated probes); pumps are double-insulated low-voltage types.
+- **Moisture**: node PCB in an IP65 box in the dry service bay, cable glands downward, drip loops
+  on every cable; conformal coat (acrylic) after bring-up, masking connectors and sockets; sensor
+  breakouts inside the chamber are potted or coated except the sensing element (SHT45 with PTFE
+  membrane variant preferred); leak sensor in the pod tray stops pumps.
+- **GFCI** upstream of everything; no mains inside any pod.
+
+## 7. Power budget
+
+See section 6 of `hardware/mechanical/calculations/calculation_report.md` (generated). Summary at
+the time of writing: about 215 W peak and 78 W mean per pod on the DC side; about 0.97 kW peak and
+0.36 kW mean at the wall for four pods. These are estimates; the platform meters the real values.
+
+## 8. Timing and data path
+
+The node timestamps samples with its own millisecond counter; the host stamps each received frame
+with NTP-disciplined UTC and estimates the node clock offset continuously (see
+`plantpulse.data.timesync`). Sensor frames at 1 Hz are averaged to 1 min records on the host;
+raw 1 Hz frames are kept for 7 days for diagnostics. Protocol: `firmware/PROTOCOL.md`.
