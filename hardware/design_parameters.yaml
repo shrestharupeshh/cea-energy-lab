@@ -1,0 +1,144 @@
+# PLANTPULSE LAB - single source of truth for design parameters.
+# Consumed by: software/plantpulse/engineering (calculations), hardware/mechanical/cad (CadQuery),
+# digital twin defaults, and documentation generators.
+# Units: mm, kg, W, s unless the key name says otherwise.
+# "verify: true" marks values taken from distributor listings / memory of datasheets that must be
+# re-checked against the manufacturer datasheet at order time (see docs/manufacturing/sourcing.md).
+
+facility:
+  n_pods: 4                 # independent growing compartments ("pods") in the baseline build
+  rack_layout: [2, 2]       # columns x tiers
+  plants_per_pod: 6
+  room_setpoint_c: 20.0     # lab room must be conditioned at or below this (requirement ENV-01)
+  room_rh_pct: 50.0
+
+pod:
+  # internal growth-chamber dimensions
+  chamber_w: 800.0          # x, along gantry travel
+  chamber_d: 500.0          # y, front (door) to back
+  extrusion: 20.0           # 2020 T-slot aluminium profile
+  base_panel_t: 5.0
+  canopy_clear_h: 539.0     # lid top to underside of mid ring
+  led_bay_h: 97.0
+  service_bay_w: 200.0      # dry bay on the right side: electronics, top-up reservoir, pump
+  module_h: 880.0
+  panel_t: 5.0              # expanded PVC (white, closed cell)
+  panel_k_w_mk: 0.07        # thermal conductivity of expanded PVC sheet (verify)
+  wall_reflectance: 0.85    # matte white PVC, PAR band (measure during commissioning)
+  window_t: 3.0             # cast acrylic, separates LED bay from chamber
+  window_par_transmittance: 0.92
+
+tub:
+  # Euro-norm stacking container 600 x 400 x 170, opaque PP (e.g. Auer Packaging EG 64/17 HG) - verify
+  ext_l: 600.0
+  ext_w: 400.0
+  ext_h: 170.0
+  wall_t: 3.0
+  solution_depth: 120.0
+  lid_t: 6.0                # matte black expanded PVC raft/lid
+  lid_reflectance: 0.05
+  net_pot_hole_d: 51.0      # 2 inch net pot
+  plant_pitch: 200.0
+  plant_cols_x: [100.0, 300.0, 500.0]   # lid coordinates
+  plant_rows_y: [100.0, 300.0]
+  tub_offset_x: 100.0       # tub origin inside chamber (leaves gantry park zone at x < 100)
+  tub_offset_y: 50.0
+
+lighting:
+  strip_mpn: BXEB-L0560Z-40E2000-C-C3    # Bridgelux EB Series Gen 3, 560 mm, 4000 K, CRI 80
+  n_strips: 6                # 3 drivers x 2 strips in series; 4 strips could not reach 250 umol at the lid (see calc report)
+  strip_len: 560.0
+  strip_w: 24.0
+  strip_y_positions: [50.0, 130.0, 210.0, 290.0, 370.0, 450.0]   # chamber y coordinates
+  strip_x_center: 400.0
+  strip_flux_lm: 2675.0     # typ. at 700 mA, Tc 25 C (datasheet DS132; verified via distributor listing)
+  strip_vf_v: 19.1          # typ. at 700 mA (min 17.8, max 20.4)
+  strip_vf_max_v: 20.4
+  strip_i_nom_a: 0.700
+  strip_i_max_a: 1.400
+  ppf_per_klm: 14.6         # umol/s per klm for 4000 K CRI80 phosphor-white (literature conversion; verify
+                            # with integrating-sphere or quantum sensor map during commissioning)
+  thermal_derate: 0.95      # hot/cold factor at operating Tc (verify)
+  driver_mpn: NLDD-700H     # Mean Well buck CC driver, PWM dimmable (successor of LDD-700H) - verify
+  driver_efficiency: 0.95
+  strips_per_driver: 2      # series
+  bus_voltage_v: 48.0
+  led_plane_above_lid: 634.0
+  nominal_ppfd: 250.0       # umol m-2 s-1 at lid plane (control treatment)
+  nominal_photoperiod_h: 16.0
+
+air:
+  fan_mpn: NF-A8 PWM        # Noctua 80x25 mm 12 V PWM
+  fan_free_flow_m3h: 55.5
+  fan_static_pressure_pa: 23.2    # 2.37 mmH2O
+  fan_power_w: 0.96
+  n_exhaust_fans: 1
+  n_mixing_fans: 1
+  n_led_bay_fans: 1
+  light_trap_k: 6.0         # loss coefficient of each labyrinth light trap, referenced to duct velocity (estimate)
+  duct_d: 76.0
+  heater_power_w: 100.0     # 24 V PTC fan heater
+  heater_cutout_c: 45.0     # independent bimetal thermostat, normally closed, in series with heater
+  humidifier_ml_h: 35.0     # ultrasonic disc module
+
+hydraulics:
+  tube_id: 8.0
+  tube_len_m: 1.8
+  n_elbows: 6
+  static_lift_m: 0.25
+  target_turnover_per_h: 4.0
+  pump_max_flow_lpm: 4.0    # small 12 V brushless centrifugal (commodity DC30A class) - verify curve
+  pump_max_head_m: 3.0
+  pump_power_w: 5.0
+  topup_reservoir_l: 5.0
+  flow_meter_k_loss: 8.0
+
+imaging:
+  sensor: IMX477
+  sensor_w_mm: 6.287
+  sensor_h_mm: 4.712
+  px_w: 4056
+  px_h: 3040
+  pixel_um: 1.55
+  focal_mm: 6.0
+  f_number: 8.0
+  lens_to_lid: 500.0
+  focus_distance: 380.0
+  stations_x: [200.0, 400.0, 600.0]   # chamber x of gantry imaging stations (above plant columns)
+  park_x: 40.0
+  arm_len: 250.0            # cantilever from rail to optical axis
+  arm_section: [20.0, 20.0] # 2020 extrusion used as arm
+  carriage_payload_kg: 0.35 # camera + lens + Pi Zero 2 W + imaging LED ring + bracket
+  belt_pitch: 2.0           # GT2
+  pulley_teeth: 20
+  motor_steps_rev: 200
+  microsteps: 16
+  rail: MGN12H
+  rail_len: 700.0
+  homing_repeatability_mm: 0.05   # mechanical endstop microswitch class (estimate; measured in VAL-IMG-01)
+  belt_stretch_mm: 0.05
+
+structure:
+  e_al_mpa: 69000.0
+  i_2020_mm4: 6900.0        # second moment of area of 20x20 T-slot profile (typ. 0.66-0.72 cm4; verify vs supplier)
+  i_2040_strong_mm4: 46000.0
+  area_2020_mm2: 160.0
+  mass_2020_kg_m: 0.45
+  yield_6063_t5_mpa: 145.0
+  m5_tnut_slip_n: 500.0     # conservative slip capacity of one M5 T-nut + corner bracket bolt (verify by test)
+  safety_factor: 3.0
+
+electrical:
+  mains_v: 120.0
+  psu_24: LRS-600-24
+  psu_48: LRS-600-48
+  psu_24_w: 600.0
+  psu_48_w: 600.0
+  psu_efficiency: 0.90
+  node_logic_w: 1.2         # ESP32-S3 + sensors
+  camera_node_w: 2.5        # Pi Zero 2 W + HQ camera, active
+  central_w: 8.0            # Raspberry Pi 5 + NVMe
+  stepper_w: 6.0
+  imaging_led_w: 5.0
+  peristaltic_w: 5.0
+  air_pump_w: 6.0           # shared aquarium air pump for the rack (mains)

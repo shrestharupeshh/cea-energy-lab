@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "plantpulse"
+version = "0.1.0"
+description = "PLANTPULSE LAB: open experimental plant phenotyping and digital-twin research platform"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+  "numpy>=1.26", "scipy>=1.11", "pandas>=2.1", "pyarrow>=14", "pyyaml>=6",
+  "scikit-learn>=1.4", "statsmodels>=0.14", "matplotlib>=3.8", "opencv-python-headless>=4.9",
+]
+
+[project.optional-dependencies]
+dashboard = ["streamlit>=1.32"]
+deep = ["torch>=2.2"]
+cad = ["cadquery>=2.4"]
+hardware = ["pyserial>=3.5"]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["software"]
+
+[tool.setuptools.package-data]
+plantpulse = ["data/schema.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
