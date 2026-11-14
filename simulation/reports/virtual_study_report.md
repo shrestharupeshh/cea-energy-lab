@@ -19,7 +19,7 @@ Randomised Latin square (rows = runs, columns = pods):
 
 ## 2. Data completeness and QC
 
-Sensor records per unit: min 40320, expected 40320 (100.0 %). Air-temperature records passing QC: 99.7-100.0 %. Images: 1344; trait records: 2688; fiducial registration succeeded on 98.6 % of trait records (it fails once leaves cover the lid markers; the pipeline then falls back to the nominal gantry position and sets a QC flag).
+Sensor records per unit: min 40320, expected 40320 (100.0 %). Air-temperature records passing QC: 99.7-100.0 %. Images: 1344; trait records: 2688; fiducial registration succeeded on 98.6 % of trait records (when it fails the pipeline falls back to the nominal gantry position and sets a QC flag).
 
 Mean achieved environment after treatment onset (simulated controller on the simulated pod):
 
@@ -74,8 +74,8 @@ Latin-square ANOVA on log pod-run means, 6 residual df, Dunnett critical value 3
 | persistence_rgr | 1776 | 12.2 | 34.2 | 17.4 | 0.948 |
 | linear | 1776 | 8.3 | 35.7 | 1.67 | 0.943 |
 | ridge | 1776 | 8.29 | 35.6 | 1.64 | 0.944 |
-| random_forest | 1776 | 4.31 | 14 | 0.272 | 0.991 |
-| gradient_boosting | 1776 | 4.58 | 14.8 | 0.132 | 0.99 |
+| random_forest | 1776 | 4.31 | 14 | 0.271 | 0.991 |
+| gradient_boosting | 1776 | 4.58 | 14.8 | 0.138 | 0.99 |
 | svr | 1776 | 4.74 | 19.4 | -1.32 | 0.983 |
 
 The persistence baseline is hard to beat at a 3-day horizon; a model that does not beat it has no forecasting value.
@@ -88,37 +88,37 @@ Unit-day classification, out-of-fold:
 
 | features | model | n | auroc | auroc_ci_low | auroc_ci_high | brier |
 |---|---|---|---|---|---|---|
-| ENV | logistic | 448 | 0.975 | 0.927 | 0.998 | 0.0639 |
-| ENV | random_forest | 448 | 0.956 | 0.886 | 0.998 | 0.0796 |
-| ENV | gradient_boosting | 448 | 0.981 | 0.95 | 0.999 | 0.0603 |
+| ENV | logistic | 448 | 0.944 | 0.882 | 0.993 | 0.0912 |
+| ENV | random_forest | 448 | 0.976 | 0.95 | 0.997 | 0.0626 |
+| ENV | gradient_boosting | 448 | 0.978 | 0.954 | 0.997 | 0.0574 |
 | IMG | logistic | 448 | 0.976 | 0.948 | 0.994 | 0.0627 |
 | IMG | random_forest | 448 | 0.944 | 0.896 | 0.984 | 0.0906 |
 | IMG | gradient_boosting | 448 | 0.944 | 0.897 | 0.986 | 0.0964 |
-| ENV+IMG | logistic | 448 | 0.997 | 0.992 | 0.999 | 0.025 |
-| ENV+IMG | random_forest | 448 | 0.959 | 0.914 | 0.996 | 0.0796 |
-| ENV+IMG | gradient_boosting | 448 | 0.954 | 0.908 | 0.994 | 0.0864 |
+| ENV+IMG | logistic | 448 | 0.991 | 0.982 | 0.997 | 0.0385 |
+| ENV+IMG | random_forest | 448 | 0.962 | 0.917 | 0.995 | 0.077 |
+| ENV+IMG | gradient_boosting | 448 | 0.964 | 0.929 | 0.992 | 0.0841 |
 
 Alarm timing (threshold = no false alarm on the negative unit-days of the other runs; alarm = 2 consecutive days above it):
 
 | model | n_stressed_units | detected_after_onset_frac | median_delay_days | pre_onset_false_alarms | n_control_units | control_false_alarms |
 |---|---|---|---|---|---|---|
-| ENV+IMG|logistic | 12 | 1 | 0.5 | 0 | 4 | 1 |
-| ENV|logistic | 12 | 0.917 | 1.5 | 0 | 4 | 1 |
+| ENV+IMG|logistic | 12 | 0.917 | 1.5 | 1 | 4 | 1 |
 | IMG|logistic | 12 | 1 | 1.5 | 0 | 4 | 1 |
-| ENV|gradient_boosting | 12 | 1 | 2 | 0 | 4 | 1 |
 | ENV+IMG|gradient_boosting | 12 | 0.917 | 2.5 | 0 | 4 | 1 |
-| ENV+IMG|random_forest | 12 | 0.75 | 2.5 | 0 | 4 | 1 |
-| ENV|random_forest | 12 | 0.833 | 3 | 0 | 4 | 1 |
 | IMG|random_forest | 12 | 0.833 | 3 | 0 | 4 | 1 |
+| ENV+IMG|random_forest | 12 | 0.917 | 3.5 | 0 | 4 | 1 |
+| ENV|random_forest | 12 | 1 | 4.5 | 0 | 4 | 1 |
+| ENV|gradient_boosting | 12 | 1 | 6 | 0 | 4 | 1 |
 | IMG|gradient_boosting | 12 | 0.667 | 9 | 0 | 4 | 1 |
+| ENV|logistic | 12 | 0.75 | 11.5 | 0 | 4 | 1 |
 
 Median delay by treatment for the best model of each information set (days after onset; undetected = censored):
 
-| treatment | ENV+IMG|logistic | ENV|logistic | IMG|logistic |
+| treatment | ENV+IMG|logistic | ENV|random_forest | IMG|logistic |
 |---|---|---|---|
-| H | 0 | 0 | 1 |
-| L | 0.5 | 2.5 | 3 |
-| N | 1 | 7 | 2 |
+| H | 2.5 | 6 | 1 |
+| L | 3 | 1.5 | 3 |
+| N | 0.5 | 7 | 2 |
 
 ### Environment set: all environment channels (trivially sees the setpoint change)
 
@@ -127,27 +127,27 @@ Unit-day classification, out-of-fold:
 | features | model | n | auroc | auroc_ci_low | auroc_ci_high | brier |
 |---|---|---|---|---|---|---|
 | ENV | logistic | 448 | 1 | 1 | 1 | 0.000654 |
-| ENV | random_forest | 448 | 0.958 | 0.872 | 1 | 0.0654 |
-| ENV | gradient_boosting | 448 | 0.996 | 0.986 | 1 | 0.0338 |
+| ENV | random_forest | 448 | 0.957 | 0.872 | 1 | 0.0661 |
+| ENV | gradient_boosting | 448 | 0.995 | 0.98 | 1 | 0.0386 |
 | IMG | logistic | 448 | 0.976 | 0.948 | 0.994 | 0.0627 |
 | IMG | random_forest | 448 | 0.944 | 0.896 | 0.984 | 0.0906 |
 | IMG | gradient_boosting | 448 | 0.944 | 0.897 | 0.986 | 0.0964 |
 | ENV+IMG | logistic | 448 | 1 | 1 | 1 | 0.00184 |
-| ENV+IMG | random_forest | 448 | 0.958 | 0.905 | 0.997 | 0.0782 |
-| ENV+IMG | gradient_boosting | 448 | 0.991 | 0.971 | 1 | 0.04 |
+| ENV+IMG | random_forest | 448 | 0.958 | 0.905 | 0.997 | 0.0787 |
+| ENV+IMG | gradient_boosting | 448 | 0.993 | 0.979 | 1 | 0.0382 |
 
 Alarm timing (threshold = no false alarm on the negative unit-days of the other runs; alarm = 2 consecutive days above it):
 
 | model | n_stressed_units | detected_after_onset_frac | median_delay_days | pre_onset_false_alarms | n_control_units | control_false_alarms |
 |---|---|---|---|---|---|---|
+| ENV+IMG|gradient_boosting | 12 | 1 | 0 | 0 | 4 | 1 |
 | ENV+IMG|logistic | 12 | 1 | 0 | 0 | 4 | 1 |
 | ENV|gradient_boosting | 12 | 1 | 0 | 0 | 4 | 1 |
 | ENV|logistic | 12 | 1 | 0 | 0 | 4 | 1 |
-| ENV+IMG|gradient_boosting | 12 | 1 | 0.5 | 0 | 4 | 1 |
 | IMG|logistic | 12 | 1 | 1.5 | 0 | 4 | 1 |
 | IMG|random_forest | 12 | 0.833 | 3 | 0 | 4 | 1 |
-| ENV|random_forest | 12 | 0.833 | 3.5 | 0 | 4 | 1 |
-| ENV+IMG|random_forest | 12 | 0.75 | 4.5 | 0 | 4 | 1 |
+| ENV+IMG|random_forest | 12 | 0.75 | 5 | 0 | 4 | 1 |
+| ENV|random_forest | 12 | 0.667 | 5 | 0 | 4 | 1 |
 | IMG|gradient_boosting | 12 | 0.667 | 9 | 0 | 4 | 1 |
 
 With 12 stressed and 4 control pod-runs the intervals are wide by construction. In the simulator the image features carry the response (growth, colour) while the response-type environment channels (water use, CO2 drawdown) are weak; whether that holds for real plants is exactly what Study D is meant to test.
@@ -186,4 +186,4 @@ The estimates should move from the twin defaults towards the simulator's hidden 
 
 Bundle `plantpulse-dataset-0.0.1-sim`: 30 files, manifest verification: intact. The bundle README carries the simulated-data warning.
 
-Total runtime 312 s.
+Total runtime 120 s.
