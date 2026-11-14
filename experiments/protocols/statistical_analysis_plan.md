@@ -69,7 +69,9 @@ a dated amendment section at the end, with reasons; the original text is never e
 - Task D1 (treatment-blind response detection) and D2 (root-zone stress) defined in
   `hypotheses.md`. Information sets: ENV, IMG, ENV+IMG; identical model families and tuning budget
   for each set.
-- Primary metric: detection lead time at a fixed false-alarm budget (≤ 1 per control pod-run),
+- Primary metric: detection lead time with the alarm threshold set to give zero false alarms on the
+  negative unit-days (controls, and treated units before onset) of the training runs; out-of-sample
+  false alarms in the held-out run are reported alongside,
   compared by paired Wilcoxon signed-rank test over stressed pod-runs (n = 12) with Hodges-Lehmann
   estimate and bootstrap CI. Secondary: AUROC/AUPRC at 24/48/72/120 h after onset with pod-run
   cluster bootstrap CIs; calibration (Brier score, reliability curve).
@@ -102,4 +104,7 @@ replace them.
 
 ## Amendments
 
-(none)
+- 2026-11 (before any plant data): the Study D false-alarm rule was changed from "≤ 1 false alarm per
+  control pod-run" to "zero false alarms on training-run negatives". The rehearsal on simulated data
+  (`simulation/reports/virtual_study_report.md`) showed that the original budget selects a threshold at
+  which every control unit alarms, which makes lead time meaningless. No real data existed at the time.

@@ -73,6 +73,8 @@ class ThermalResult:
     canopy_air_speed_m_s: float
 
     def as_rows(self):
+        from ..config import load_design
+        d_humid = load_design()["air"]["humidifier_ml_h"]
         return [
             ("Exhaust fan operating flow (2 light traps)", f"{self.exhaust_flow_m3h:.1f} m3/h", f"{self.air_changes_per_h:.0f} air changes/h"),
             ("Wall conductance UA", f"{self.ua_w_k:.1f} W/K", ""),
@@ -87,7 +89,7 @@ class ThermalResult:
             ("Peak crop transpiration (6 plants)", f"{self.transp_g_h:.0f} g/h", "assumption: 150 mL/plant/day in 16 h"),
             ("Ventilation moisture removal capacity", f"{self.vent_moisture_capacity_g_h:.0f} g/h", "23 C/70 % chamber vs 20 C/50 % room, full flow"),
             ("RH floor at full ventilation, mature crop", f"{self.rh_floor_pct_full_vent:.0f} %", ""),
-            ("Humidifier duty for 70 % RH, empty chamber, min vent", f"{self.humidifier_needed_g_h:.0f} g/h", "installed ~35 g/h"),
+            ("Humidifier duty for 70 % RH, empty chamber, min vent", f"{self.humidifier_needed_g_h:.0f} g/h", f"installed {d_humid:.0f} g/h; daytime demand is higher (fan above minimum)"),
             ("CO2 drawdown at full ventilation", f"{self.co2_drawdown_ppm_full_vent:.0f} ppm", "peak assimilation assumption"),
             ("Minimum ventilation for < 100 ppm drawdown", f"{self.min_vent_for_co2_m3h:.1f} m3/h", "sets the minimum fan duty"),
             ("Mean air speed over canopy, mixing fan at 100 %", f"{self.canopy_air_speed_m_s:.2f} m/s", f"jet estimate; run at ~{100 * 0.5 / self.canopy_air_speed_m_s:.0f} % PWM for 0.5 m/s; measure with anemometer"),

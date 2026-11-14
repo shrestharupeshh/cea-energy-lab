@@ -13,10 +13,13 @@ import numpy as np
 
 DICT = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
 MARKER_MM = 20.0
-# marker id -> lid coordinates (mm) of the marker centre. Two per station, on the front and back lid margins,
-# midway between plant columns so that leaves cover them as late as possible.
-LID_MARKERS = {0: (200.0, 12.0), 1: (200.0, 388.0), 2: (400.0, 12.0), 3: (400.0, 388.0),
-               4: (12.0, 200.0), 5: (588.0, 200.0)}
+# marker id -> lid coordinates (mm) of the marker centre. The markers sit on two "fiducial bars" fixed beside
+# the tub at lid height, 40 mm outside the front and back lid edges, at x = 0 / 200 / 400 / 600. Every marker is
+# at least 172 mm from the nearest plant centre, beyond the reach of a mature head (radius ~150 mm), and each
+# station sees four of them. (Markers ON the lid were tried first in simulation: leaves cover them from about
+# day 8 and registration then succeeded on only one third of images.)
+LID_MARKERS = {0: (0.0, -40.0), 1: (200.0, -40.0), 2: (400.0, -40.0), 3: (600.0, -40.0),
+               4: (0.0, 440.0), 5: (200.0, 440.0), 6: (400.0, 440.0), 7: (600.0, 440.0)}
 
 
 @dataclass

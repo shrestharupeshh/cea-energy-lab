@@ -125,6 +125,12 @@ CommandResult handle_command(const char* line, Controller& c) {
   char buf[160];
   strncpy(buf, line, sizeof(buf) - 1);
   buf[sizeof(buf) - 1] = 0;
+  // Extract the id first so that a rejected command is still acknowledged with its id.
+  if (const char* idp = strstr(line, " id=")) {
+    char* end = nullptr;
+    long v = strtol(idp + 4, &end, 10);
+    if (end != idp + 4) r.id = v;
+  }
   char* save = nullptr;
   char* verb = strtok_r(buf, " \r\n", &save);
   if (!verb) { snprintf(r.msg, sizeof(r.msg), "empty"); return r; }

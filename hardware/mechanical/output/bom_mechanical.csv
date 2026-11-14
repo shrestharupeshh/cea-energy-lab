@@ -18,6 +18,7 @@ PP-M-020,Service bay floor 500 x 180 x 5,"Expanded PVC 5 mm, white",1,,sheet
 PP-M-021,"LED window, cast acrylic 3 mm, 838 x 538, corner notched","PMMA cast, clear",1,,sheet
 PP-M-022,"Tub lid 600 x 400 x 6, 6 x 51 mm holes + ports","Expanded PVC 6 mm, matte black",1,,sheet
 PP-M-023,LED heat-spreader plate 780 x 480 x 3,Al 5052-H32,1,,sheet
+PP-M-024,"Fiducial bar 640 x 30 x 3 with 4 ArUco markers (DICT_4X4_50, 20 mm) at 200 mm pitch","Expanded PVC 3 mm, white, matte laminate",2,,sheet
 PP-M-101,carriage plate,"PETG, printed",1,,printed
 PP-M-102,camera mount,"PETG, printed",1,,printed
 PP-M-103,motor mount,"PETG, printed",1,,printed

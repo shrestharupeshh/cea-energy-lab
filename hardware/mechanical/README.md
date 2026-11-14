@@ -34,7 +34,8 @@ SolidWorks before any outsourced machining.
    (reflective, closed-cell, wipe-clean). Pods stack two high on levelling feet.
 2. **Growing tray**: 600 x 400 x 170 mm Euro container as a deep-water-culture tub, 28 L at 120 mm
    depth, on two cross-members (0.55 mm deflection, safety factor 10 on yield). Matte-black 6 mm
-   lid with six 51 mm net-pot holes on a 200 mm pitch, probe/tube ports, four ArUco fiducials.
+   lid with six 51 mm net-pot holes on a 200 mm pitch and probe/tube ports. Two fiducial bars (PP-M-024)
+   beside the tub carry eight ArUco markers outside the reach of the canopy.
 3. **Reservoir mounting**: 5 L top-up reservoir in the service bay on a printed cradle and one bar
    load cell, on a two-rail shelf (0.06 mm deflection).
 4. **Plumbing**: tub → suction port → circulation pump (bay floor, below water line, flooded

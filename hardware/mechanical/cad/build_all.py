@@ -129,7 +129,7 @@ def main():
         "3 x dia 12.5 tube ports at x = 25, y = 150 / 200 / 250 (suction, air, return)",
         "2 x dia 22 at x = 575, y = 50 / 350 (top-up inlet, float switch)",
         "Datum: lid corner nearest gantry park, front edge",
-        "Apply 4 ArUco fiducials (20 mm, DICT_4X4_50 ids 0-3) at 30 mm from each corner",
+        "Fiducials are NOT on the lid: see fiducial bars PP-M-024 (markers 40 mm outside front/back lid edges)",
     ]
     p = OUT / "drawings" / "PP-M-022_lid.svg"
     drawing_sheet(m.lid(), "Tub lid / raft", "PP-M-022", lid_dims, p)

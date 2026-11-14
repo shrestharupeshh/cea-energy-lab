@@ -61,7 +61,9 @@ def process_sensors(db, store, experiment: str, freq: str = "1min") -> pd.DataFr
                 agg[c] = good.resample(freq).mean()
                 agg[f"{c}_n"] = good.resample(freq).count()
                 if f"{c}_qc" in g:
-                    agg[f"{c}_qc"] = g[f"{c}_qc"].resample(freq).agg(lambda s: int(np.bitwise_or.reduce(s.to_numpy(np.int64))) if len(s) else validation.QC_MISSING)
+                    q = g[f"{c}_qc"].astype(np.int64)
+                    ored = sum(((q & bit) > 0).resample(freq).max().fillna(False).astype(np.int64) * bit for bit in validation.QC_NAMES)
+                    agg[f"{c}_qc"] = ored
         for c in LAST_COLS:
             if c in g:
                 agg[c] = g[c].resample(freq).last()
@@ -72,10 +74,10 @@ def process_sensors(db, store, experiment: str, freq: str = "1min") -> pd.DataFr
         m.insert(0, "pod", int(pod))
         m["unit_id"] = f"{experiment}-P{int(pod):02d}"
         m["experiment_id"] = experiment
-        # minutes with no frames at all
-        for c in MEAN_COLS:
+        for c in MEAN_COLS:                      # minutes with no usable sample
             if f"{c}_qc" in m:
-                m.loc[m[f"{c}_n"] == 0, f"{c}_qc"] = m.loc[m[f"{c}_n"] == 0, f"{c}_qc"].fillna(0).astype(int) | validation.QC_MISSING
+                empty = (m[f"{c}_n"] == 0).to_numpy()
+                m[f"{c}_qc"] = m[f"{c}_qc"].astype(np.int64) | (empty.astype(np.int64) * validation.QC_MISSING)
         parts.append(m.reset_index(names="utc"))
     out = pd.concat(parts, ignore_index=True)
     store.write_processed(experiment, "sensors_1min", out)

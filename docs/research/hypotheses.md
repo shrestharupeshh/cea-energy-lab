@@ -14,14 +14,18 @@ success. "Unit" = pod-run (one pod during one crop cycle) unless stated.
 
 ## RQ1 - multimodal early stress detection
 
-- **H1a (primary)**: For stress onset detection at a fixed false-alarm rate of ≤ 1 false alarm per
-  control pod-run, the fused (environment + image) detector's median detection lead time relative
+- **H1a (primary)**: For stress onset detection with the alarm threshold fixed so that the training
+  runs produce no false alarm (see amendment note below), the fused (environment + image) detector's median detection lead time relative
   to the reference onset is at least 24 h earlier than the better single-modality detector.
 - **H1b**: Fused-model AUROC for "stressed vs control" at 72 h after treatment onset exceeds that
   of the better single-modality model by ≥ 0.05 (paired, unit-level cluster bootstrap 95 % CI
   excluding 0).
 - **H1-null to report**: fusion gives no earliness benefit; environment-only detection is
   sufficient for stresses that are themselves environmental setpoint deviations.
+
+Amendment (2026-11, before any plant data): the false-alarm rule was originally "≤ 1 per control pod-run".
+A rehearsal on simulated data showed that this budget lets every control unit alarm once; it was replaced
+by the zero-training-false-alarm rule. See the SAP amendment log.
 
 Critical caveat built into the design: for light and temperature treatments the environmental
 sensors measure the *cause* directly, so an environment-only model can trivially "detect the

@@ -79,7 +79,8 @@ air:
   duct_d: 76.0
   heater_power_w: 100.0     # 24 V PTC fan heater
   heater_cutout_c: 45.0     # independent bimetal thermostat, normally closed, in series with heater
-  humidifier_ml_h: 35.0     # ultrasonic disc module
+  humidifier_ml_h: 150.0    # ultrasonic mist maker, duty-cycled. A 35 mL/h disc could not hold 68 % RH with a small canopy
+                            # while the exhaust fan is cooling (twin prediction: ~54 % RH); re-check in VAL-ENV-02
 
 hydraulics:
   tube_id: 8.0

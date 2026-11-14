@@ -193,6 +193,12 @@ def handle_command(line: str, c: Controller) -> dict:
         r["msg"] = "empty"
         return r
     verb, args = toks[0], toks[1:]
+    for tok in args:                                   # the id is extracted first so that rejections are attributable
+        if tok.startswith("id="):
+            try:
+                r["id"] = int(float(tok[3:]))
+            except ValueError:
+                pass
     if verb not in ("SET", "MAN", "MODE", "MOVE", "CAPTURE", "TIME", "PING"):
         r["msg"] = "unknown verb"
         return r

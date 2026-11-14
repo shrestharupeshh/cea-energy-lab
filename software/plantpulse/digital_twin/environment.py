@@ -7,7 +7,7 @@ to be re-identified from commissioning step tests (VAL-DT-02). All outputs are P
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 
 import numpy as np
 
@@ -15,6 +15,7 @@ from ..config import load_design
 from ..engineering import lighting, thermal
 
 RHO, CP, LATENT = 1.2, 1005.0, 2.45e6
+_DESIGN_CACHE = None
 
 
 @dataclass
@@ -43,6 +44,13 @@ class EnvParams:
 
     @classmethod
     def from_design(cls) -> "EnvParams":
+        global _DESIGN_CACHE
+        if _DESIGN_CACHE is None:
+            _DESIGN_CACHE = cls._from_design()
+        return replace(_DESIGN_CACHE)
+
+    @classmethod
+    def _from_design(cls) -> "EnvParams":
         d = load_design()
         lt = lighting.analyse(d)
         th = thermal.analyse(d, lt.electrical_w_full, lt.ppf_total_umol_s * d["pod"]["window_par_transmittance"])

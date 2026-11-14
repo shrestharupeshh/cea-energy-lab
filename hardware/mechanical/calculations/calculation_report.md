@@ -69,7 +69,7 @@ each result has a corresponding commissioning test in `docs/validation/validatio
 | Peak crop transpiration (6 plants) | 56 g/h | assumption: 150 mL/plant/day in 16 h |
 | Ventilation moisture removal capacity | 130 g/h | 23 C/70 % chamber vs 20 C/50 % room, full flow |
 | RH floor at full ventilation, mature crop | 54 % |  |
-| Humidifier duty for 70 % RH, empty chamber, min vent | 23 g/h | installed ~35 g/h |
+| Humidifier duty for 70 % RH, empty chamber, min vent | 23 g/h | installed 150 g/h; daytime demand is higher (fan above minimum) |
 | CO2 drawdown at full ventilation | 14 ppm | peak assimilation assumption |
 | Minimum ventilation for < 100 ppm drawdown | 3.1 m3/h | sets the minimum fan duty |
 | Mean air speed over canopy, mixing fan at 100 % | 1.70 m/s | jet estimate; run at ~29 % PWM for 0.5 m/s; measure with anemometer |

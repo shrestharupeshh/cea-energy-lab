@@ -369,6 +369,9 @@ def build_pod(with_plants: bool = True, gantry_x: float | None = None):
     bom.add("PP-P-201", "Euro container 600 x 400 x 170, opaque PP", "PP", 1, None, "purchased")
     add(lid(), "PP-M-022_lid", "black", (TUB_X, TUB_Y, Z_FLOOR + t["ext_h"]))
     bom.add("PP-M-022", "Tub lid 600 x 400 x 6, 6 x 51 mm holes + ports", "Expanded PVC 6 mm, matte black", 1, None, "sheet")
+    for y_bar, tag in ((TUB_Y - 40 - 15, "front"), (TUB_Y + t["ext_w"] + 40 - 15, "back")):     # fiducial bars beside the tub
+        add(box(t["ext_l"] + 40, 30, 3), f"PP-M-024_fiducial_bar_{tag}", "pvc", (TUB_X - 20, y_bar, Z_LID - 3))
+        bom.add("PP-M-024", "Fiducial bar 640 x 30 x 3 with 4 ArUco markers (DICT_4X4_50, 20 mm) at 200 mm pitch", "Expanded PVC 3 mm, white, matte laminate", 1, None, "sheet")
     water = box(t["ext_l"] - 8, t["ext_w"] - 8, t["solution_depth"], 4, 4, 3)
     add(water, "solution", "water", (TUB_X, TUB_Y, Z_FLOOR))
     _pot, _plant = net_pot(), lettuce_placeholder()

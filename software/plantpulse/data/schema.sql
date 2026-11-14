@@ -81,3 +81,8 @@ CREATE VIEW IF NOT EXISTS v_plant_full AS
   SELECT p.plant_id, p.position, p.status, p.excluded AS plant_excluded, u.unit_id, u.pod, u.blind_code,
          u.excluded AS unit_excluded, t.code AS treatment, t.onset_day, e.experiment_id, e.study, e.data_class, e.day0_utc
   FROM plant p JOIN unit u USING (unit_id) LEFT JOIN treatment t USING (treatment_id) JOIN experiment e ON e.experiment_id = u.experiment_id;
+CREATE TABLE IF NOT EXISTS imaging_schedule (
+  experiment_id TEXT PRIMARY KEY REFERENCES experiment, interval_min INTEGER NOT NULL DEFAULT 120,
+  window_start_min INTEGER NOT NULL DEFAULT 390, window_end_min INTEGER NOT NULL DEFAULT 1290,   -- inside the photoperiod only
+  stereo INTEGER NOT NULL DEFAULT 1, enabled INTEGER NOT NULL DEFAULT 1
+);

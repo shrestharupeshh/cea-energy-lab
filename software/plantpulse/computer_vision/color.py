@@ -38,7 +38,7 @@ def color_traits(bgr: np.ndarray, mask: np.ndarray) -> dict:
     hsv = cv2.cvtColor(bgr, cv2.COLOR_BGR2HSV)[m].astype(np.float32)
     hue = hsv[:, 0] * 2.0
     s = r + g + b + 1e-6
-    yellow = (hue >= 36) & (hue < 64) & (hsv[:, 1] > 60) & (hsv[:, 2] > 110)
+    yellow = (hue >= 36) & (hue < 80) & (hsv[:, 1] > 60) & (hsv[:, 2] > 110)      # yellow to yellow-green (chlorosis)
     brown = ((hue < 36) | (hue > 330)) & (hsv[:, 2] > 40)
     return {
         "L_mean": float(L.mean()), "a_mean": float(a.mean()), "b_mean": float(bb.mean()),
@@ -46,5 +46,5 @@ def color_traits(bgr: np.ndarray, mask: np.ndarray) -> dict:
         "exg_mean": float(((2 * g - r - b) / s).mean()), "ngrdi": float(((g - r) / (g + r + 1e-6)).mean()),
         "vari": float(np.clip((g - r) / (g + r - b + 1e-6), -5, 5).mean()),
         "yellow_frac": float(yellow.mean()), "brown_frac": float(brown.mean()),
-        "dark_green_frac": float(((hue >= 64) & (hue < 170) & (hsv[:, 2] < 90)).mean()),
+        "dark_green_frac": float(((hue >= 80) & (hue < 170) & (hsv[:, 2] < 90)).mean()),
     }

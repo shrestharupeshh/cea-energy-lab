@@ -178,5 +178,5 @@
 <text x="12" y="803.5" font-family="monospace" font-size="10.5">3 x dia 12.5 tube ports at x = 25, y = 150 / 200 / 250 (suction, air, return)</text>
 <text x="12" y="818.0" font-family="monospace" font-size="10.5">2 x dia 22 at x = 575, y = 50 / 350 (top-up inlet, float switch)</text>
 <text x="12" y="832.5" font-family="monospace" font-size="10.5">Datum: lid corner nearest gantry park, front edge</text>
-<text x="12" y="847.0" font-family="monospace" font-size="10.5">Apply 4 ArUco fiducials (20 mm, DICT_4X4_50 ids 0-3) at 30 mm from each corner</text>
+<text x="12" y="847.0" font-family="monospace" font-size="10.5">Fiducials are NOT on the lid: see fiducial bars PP-M-024 (markers 40 mm outside front/back lid edges)</text>
 </svg>

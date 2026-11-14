@@ -103,7 +103,7 @@ class SimNode:
         if self.epoch is None:
             saved = (sp.lights_on_min, sp.lights_off_min)
             sp.lights_off_min = sp.lights_on_min
-        o = self.ctl.step(nlg.Inputs(air_t=meas_t, rh=meas_rh, air_age_ms=int(dt_s * 1000), host_age_ms=self.host_age_ms,
+        o = self.ctl.step(nlg.Inputs(air_t=meas_t, rh=meas_rh, air_age_ms=0, host_age_ms=self.host_age_ms,
                                      minute_of_day=self.minute_of_day(), door_open=self.door_open, leak=self.leak,
                                      float_low=self.tub_deficit_g > 150.0), dt_s)
         if self.epoch is None:

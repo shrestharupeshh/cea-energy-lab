@@ -31,7 +31,7 @@ int main() {
   assert(r.ok && r.id == 5 && c.sp.air_t_day == 24.0f && std::fabs(c.sp.led_duty - 0.74f) < 1e-6f);
   // out-of-range is rejected atomically (nothing applied)
   r = handle_command("SET air_t_day=40 rh=50 id=6", c);
-  assert(!r.ok && c.sp.air_t_day == 24.0f && c.sp.rh == 70.0f);
+  assert(!r.ok && r.id == 6 && c.sp.air_t_day == 24.0f && c.sp.rh == 70.0f);   // rejection keeps its id
   r = handle_command("SET led=1.5", c);
   assert(!r.ok);
   r = handle_command("SET on=0 off=1300", c);                 // 21.7 h photoperiod

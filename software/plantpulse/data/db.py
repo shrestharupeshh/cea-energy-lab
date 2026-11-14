@@ -19,6 +19,7 @@ def now_utc() -> str:
 class MetaDB:
     def __init__(self, path: str | Path):
         self.path = str(path)
+        Path(self.path).parent.mkdir(parents=True, exist_ok=True)
         self.con = sqlite3.connect(self.path)
         self.con.row_factory = sqlite3.Row
         self.con.executescript(resources.files("plantpulse.data").joinpath("schema.sql").read_text())
